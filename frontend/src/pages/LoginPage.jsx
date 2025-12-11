@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import clienteAxios from '../config/axios'; // Importamos nuestra configuración
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -13,12 +13,20 @@ const LoginPage = () => {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', formData);
+      // Usamos clienteAxios en lugar de axios directo
+      const res = await clienteAxios.post('/api/auth/login', formData);
+      
+      // GUARDAR TOKEN
+      localStorage.setItem('token', res.data.token);
       localStorage.setItem('usuario', JSON.stringify(res.data.usuario));
-      alert(`Bienvenido, ${res.data.usuario.nombre}`);
+      
+      // Redireccionar
       navigate('/torneos');
+      
     } catch (err) {
-      setError(err.response?.data?.mensaje || 'Error al conectar');
+      console.log(err);
+      // Manejo de errores seguro
+      setError(err.response?.data?.msg || 'Error al conectar');
     }
   };
 
