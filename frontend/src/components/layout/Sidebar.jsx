@@ -29,20 +29,20 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             )}
 
             <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
-                <h2>👑 Clash Manager</h2>
+                <h2> Clash Manager</h2>
                 
                 <nav>
                     <Link to="/torneos" className={getClass('/torneos')} onClick={toggleSidebar}>
-                        🏆 <span>Torneos</span>
+                         <span>Torneos</span>
                     </Link>
                     
                     <Link to="/mis-mazos" className={getClass('/mis-mazos')} onClick={toggleSidebar}>
-                        🎴 <span>Mis Mazos</span>
+                         <span>Mis Mazos</span>
                     </Link>
                 </nav>
 
                 <button onClick={cerrarSesion} className="logout-btn">
-                    🚪 Cerrar Sesión
+                     Cerrar Sesión
                 </button>
             </aside>
         </>

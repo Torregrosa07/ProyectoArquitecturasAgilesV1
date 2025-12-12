@@ -68,7 +68,7 @@ const Torneos = () => {
             {/* CABECERA */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
                 <h1 style={{color: 'var(--clash-blue-dark)', margin: 0, textShadow: 'none'}}>
-                    🏆 Arenas Reales
+                     Arenas Reales
                 </h1>
                 <button 
                     onClick={() => setMostrarModal(true)}
@@ -106,11 +106,11 @@ const Torneos = () => {
                                 </div>
                                 
                                 <div style={{color: '#57606f', marginBottom: '20px', fontSize: '0.95rem'}}>
-                                    <p style={{margin: '5px 0'}}>⚔️ <strong>Modo:</strong> {torneo.modalidad}</p>
-                                    <p style={{margin: '5px 0'}}>📅 <strong>Fecha:</strong> {new Date(torneo.fecha).toLocaleDateString()}</p>
-                                    <p style={{margin: '5px 0'}}>👥 <strong>Jugadores:</strong> {torneo.participantes.length} / {torneo.cantidad_jugadores}</p>
+                                    <p style={{margin: '5px 0'}}> <strong>Modo:</strong> {torneo.modalidad}</p>
+                                    <p style={{margin: '5px 0'}}> <strong>Fecha:</strong> {new Date(torneo.fecha).toLocaleDateString()}</p>
+                                    <p style={{margin: '5px 0'}}> <strong>Jugadores:</strong> {torneo.participantes.length} / {torneo.cantidad_jugadores}</p>
                                     <p style={{margin: '5px 0', fontSize: '0.8em', color: '#a4b0be'}}>
-                                        👑 Creado por: {torneo.creador?.nombre || 'Desconocido'}
+                                         Creado por: {torneo.creador?.nombre || 'Desconocido'}
                                     </p>
                                 </div>
                             </div>

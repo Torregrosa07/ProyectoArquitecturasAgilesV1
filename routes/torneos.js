@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Torneo = require('../models/Torneo');
-const Partido = require('../models/Partido'); // IMPORTANTE: Solo se declara aquí arriba
+const Partido = require('../models/Partido'); // IMPORTANTE: Importado una sola vez aquí arriba
 const auth = require('../middleware/auth');
 
-// Obtener todos los torneos
+// 1. OBTENER TODOS LOS TORNEOS
 router.get('/', auth, async (req, res) => {
   try {
     const torneos = await Torneo.find()
@@ -12,16 +12,16 @@ router.get('/', auth, async (req, res) => {
       .populate('participantes.jugador', 'nombre tagClash');
     res.json({ torneos });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener torneos' });
   }
 });
 
-// Crear un torneo
+// 2. CREAR TORNEO
 router.post('/', auth, async (req, res) => {
   try {
     const nuevoTorneo = new Torneo(req.body);
     nuevoTorneo.creador = req.usuario.id; 
-    
     const guardado = await nuevoTorneo.save();
     res.status(201).json(guardado);
   } catch (error) {
@@ -29,7 +29,7 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// Unirse a un torneo
+// 3. UNIRSE A TORNEO
 router.put('/unirse/:idTorneo', auth, async (req, res) => {
   try {
     const torneo = await Torneo.findById(req.params.idTorneo);
@@ -46,7 +46,7 @@ router.put('/unirse/:idTorneo', auth, async (req, res) => {
   }
 });
 
-// Obtener detalles de un torneo específico
+// 4. OBTENER DETALLES (ID)
 router.get('/:id', auth, async (req, res) => {
   try {
     const torneo = await Torneo.findById(req.params.id)
@@ -61,7 +61,7 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
-// ELIMINAR TORNEO (Solo el creador)
+// 5. ELIMINAR TORNEO
 router.delete('/:id', auth, async (req, res) => {
     try {
         const torneo = await Torneo.findById(req.params.id);
@@ -70,21 +70,22 @@ router.delete('/:id', auth, async (req, res) => {
             return res.status(404).json({ msg: 'Torneo no encontrado' });
         }
 
-        // Verificar creador
+        // Verificar que quien borra es el creador
         if (torneo.creador.toString() !== req.usuario.id) {
-            return res.status(401).json({ msg: 'No autorizado para eliminar este torneo' });
+            return res.status(401).json({ msg: 'No tienes permiso para borrar esto' });
         }
 
-        // 1. Eliminar partidos asociados
+        // 1º Borramos los partidos del torneo (Limpieza)
         await Partido.deleteMany({ torneo: req.params.id });
 
-        // 2. Eliminar torneo
+        // 2º Borramos el torneo
         await Torneo.findByIdAndDelete(req.params.id);
 
         res.json({ msg: 'Torneo eliminado correctamente' });
         
     } catch (error) {
         console.error("🔴 ERROR EN DELETE:", error);
+        // Devolvemos JSON siempre para evitar el error "undefined"
         res.status(500).json({ msg: 'Error del servidor: ' + error.message });
     }
 });

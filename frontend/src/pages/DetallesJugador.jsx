@@ -64,7 +64,7 @@ const DetallesJugador = () => {
 
             {/* SECCIÓN DE MAZOS */}
             <h2 style={{color: 'var(--clash-blue-dark)', marginBottom: '20px', display: 'flex', alignItems: 'center'}}>
-                🎴 Mazos de Batalla 
+                 Mazos de Batalla 
                 <span style={{
                     background: 'var(--clash-gold)', 
                     color: '#5e3803', 
