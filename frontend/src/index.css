@@ -1,13 +1,254 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* frontend/src/index.css */
+:root {
+  --clash-blue: #4a69bd;       /* Azul fondo */
+  --clash-blue-dark: #1e3799;  /* Azul oscuro barra */
+  --clash-gold: #f6b93b;       /* Dorado botón */
+  --clash-gold-shadow: #e58e26;/* Sombra botón */
+  --clash-green: #78e08f;      /* Verde acción */
+  --clash-red: #eb4d4b;        /* Rojo peligro */
+  --bg-color: #f1f2f6;         /* Gris muy claro fondo */
+  --text-dark: #2f3542;
+  --text-light: #ffffff;
+  --sidebar-width: 260px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 0;
+  font-family: 'Rubik', sans-serif; /* Nueva fuente */
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- LAYOUT PRINCIPAL --- */
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background-image: radial-gradient(#dfe4ea 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  margin-left: 0; /* Ajuste para móvil */
+  transition: margin-left 0.3s;
+}
+
+/* --- BARRA LATERAL (SIDEBAR) --- */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--clash-blue-dark);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.2);
+  position: fixed;
+  height: 100vh;
+  z-index: 100;
+  transition: transform 0.3s ease;
+  border-right: 5px solid rgba(0,0,0,0.1);
+}
+
+.sidebar h2 {
+  text-align: center;
+  color: var(--clash-gold);
+  text-shadow: 2px 2px 0px #000;
+  font-weight: 900;
+  font-size: 1.8rem;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+  border-bottom: 2px dashed rgba(255,255,255,0.2);
+  padding-bottom: 20px;
+}
+
+/* Enlaces del menú */
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #a4b0be;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.nav-link span { margin-left: 12px; font-size: 1.1rem; }
+
+.nav-link:hover {
+  background-color: rgba(255,255,255,0.1);
+  color: white;
+  transform: translateX(5px);
+}
+
+.nav-link.active {
+  background-color: var(--clash-blue);
+  color: white;
+  border: 2px solid var(--clash-gold);
+  box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+}
+
+/* Botón Cerrar Sesión */
+.logout-btn {
+  margin-top: auto;
+  background-color: var(--clash-red);
+  color: white;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #c0392b; /* Efecto 3D */
+  transition: all 0.1s;
+}
+
+.logout-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #c0392b;
+}
+
+/* --- TARJETAS (CARDS) --- */
+/* Sobrescribe los estilos inline antiguos si usas clases */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.clash-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  border-bottom: 6px solid #dfe4ea; /* Efecto 3D */
+  transition: transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.clash-card:hover {
+  transform: translateY(-5px);
+  border-bottom-color: var(--clash-gold);
+}
+
+.clash-card h3 {
+  color: var(--clash-blue-dark);
+  font-weight: 900;
+  margin-top: 0;
+}
+
+/* --- BOTONES GENERALES (Estilo Juego) --- */
+button {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Botón Principal (Verde/Dorado) */
+.btn-primary {
+  background-color: var(--clash-gold);
+  color: #5e3803;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 0 var(--clash-gold-shadow);
+  transition: all 0.1s;
+  font-size: 1rem;
+}
+
+.btn-primary:active {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 var(--clash-gold-shadow);
+}
+
+/* Inputs bonitos */
+input, select {
+  border: 2px solid #dfe4ea;
+  border-radius: 12px;
+  padding: 12px 15px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
+  background: #f1f2f6;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus {
+  border-color: var(--clash-blue);
+  background: white;
+}
+
+/* --- RESPONSIVE --- */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 2000;
+  background: var(--clash-gold);
+  border: none;
+  color: #5e3803;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 4px 0 var(--clash-gold-shadow);
+}
+
+@media (min-width: 769px) {
+  .main-content {
+    margin-left: var(--sidebar-width); /* Deja espacio al menú fijo */
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle { display: block; }
+  .sidebar { transform: translateX(-100%); width: 80%; }
+  .sidebar.open { transform: translateX(0); }
+  .main-content { padding: 80px 20px 20px 20px; }
+}
+
+/* BRACKET VISUAL */
+.bracket-container {
+  display: flex;
+  gap: 40px;
+  overflow-x: auto;
+  padding: 20px 0;
+  align-items: center; /* Centrar verticalmente */
+}
+
+.ronda-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 20px;
+  min-width: 280px;
+  position: relative;
+}
+
+.ronda-title {
+  text-align: center;
+  color: var(--clash-gold);
+  text-transform: uppercase;
+  font-weight: 900;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 0 #000;
+}
+
+/* Conectores visuales (opcional, líneas simples) */
+.ronda-column:not(:last-child)::after {
+  content: "➡";
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  color: #bdc3c7;
+  font-size: 2rem;
 }
